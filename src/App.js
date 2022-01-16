@@ -1,57 +1,92 @@
-import React, { Component, useState } from 'react';
-import logo from './logo.svg';
+import React, { Component, useState, useEffect } from 'react';
+// import logo from './logo.svg';
 import './App.css';
-import monstersData from "./data/data.json";
+// import monstersData from './data/data.json';
 import SearchBox from './components/search-box/search-box.component';
 import Card from './components/card/card.component';
-class App extends Component {
-  constructor() {
-    super();
+import axios from 'axios';
 
-    this.state = {
-      monsters: monstersData.data,
-      // filteredMonstersData: [],
-      searchText: ''
-    };
-  }
+function App() {
+  const [monsters, setMonsters] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
-  handleSearchBoxChange = (e) => {
+  const handleSearchBoxChange = (e) => {
     const text = e.target.value;
-    this.setState({ searchText: text });
-
-    // const { monsters } = this.state;
-    // const filteredData = monsters.filter(function (item) {
-    //   const name = item.name.toLowerCase();
-    //   if (name.includes(text.toLowerCase())) return item;
-    // });
-
-    // this.setState({ filteredMonstersData: filteredData });
+    setSearchText(text);
   };
 
-  // mounting, updting, unmount
-  // mounting
-  // componentDidMount() {
-  //   this.setState({ filteredMonstersData: [...this.state.monsters] });
-  // }
+  useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/users').then((response) => setMonsters(response.data));
+  }, []);
 
-  render() {
-    // const { searchText, filteredMonstersData } = this.state;
-    const { searchText, monsters } = this.state;
+  const filteredMonstersData = monsters.filter(function (item) {
+    const name = item.name.toLowerCase();
+    if (name.includes(searchText.toLowerCase())) return item;
+  });
 
-    const filteredMonstersData = monsters.filter(function (item) {
-      const name = item.name.toLowerCase();
-      if (name.includes(searchText.toLowerCase())) return item;
-    });
-
-    return (
-      <div className="App">
-        <SearchBox value={searchText} handleSearchBoxChange={this.handleSearchBoxChange} />
-        {filteredMonstersData.map(function (item) {
-          return <Card key={item.id} item={item}  />
-        })}
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <SearchBox value={searchText} handleSearchBoxChange={handleSearchBoxChange} />
+      {filteredMonstersData.length < 1 ? (
+        <p>Loading....</p>
+      ) : (
+        filteredMonstersData.map(function (item) {
+          return <Card key={item.id} item={item} />;
+        })
+      )}
+    </div>
+  );
 }
+
+// class App extends Component {
+//   constructor() {
+//     super();
+
+//     this.state = {
+//       monsters: [],
+//       // filteredMonstersData: [],
+//       searchText: ''
+//     };
+//   }
+
+//   handleSearchBoxChange = (e) => {
+//     const text = e.target.value;
+//     this.setState({ searchText: text });
+
+//     // const { monsters } = this.state;
+//     // const filteredData = monsters.filter(function (item) {
+//     //   const name = item.name.toLowerCase();
+//     //   if (name.includes(text.toLowerCase())) return item;
+//     // });
+
+//     // this.setState({ filteredMonstersData: filteredData });
+//   };
+
+//   // mounting, updting, unmount
+//   // mounting
+//   componentDidMount() {
+//     axios.get('https://jsonplaceholder.typicode.com/users')
+//       .then(response => this.setState({ monsters: response.data }));
+//   }
+
+//   render() {
+//     // const { searchText, filteredMonstersData } = this.state;
+//     const { searchText, monsters } = this.state;
+
+//     const filteredMonstersData = monsters.filter(function (item) {
+//       const name = item.name.toLowerCase();
+//       if (name.includes(searchText.toLowerCase())) return item;
+//     });
+
+//     return (
+//       <div className="App">
+//         <SearchBox value={searchText} handleSearchBoxChange={this.handleSearchBoxChange} />
+//         {filteredMonstersData.map(function (item) {
+//           return <Card key={item.id} item={item} />;
+//         })}
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
