@@ -17,27 +17,29 @@ function Homepage() {
     axios.get('https://jsonplaceholder.typicode.com/users').then((response) => setMonsters(response.data));
   }, []);
 
-  const filteredMonstersData = monsters.filter(function (item) {
+  const filteredMonstersData = monsters.filter((item) => {
     const name = item.name.toLowerCase();
     if (name.includes(searchText.toLowerCase())) return item;
   });
 
   return (
-    <div className="App">
+    <>
+      <h1>Monsters Rolodex</h1>
       <SearchBox value={searchText} handleSearchBoxChange={handleSearchBoxChange} />
       {filteredMonstersData.length < 1 ? (
         <p>Loading....</p>
       ) : (
-        filteredMonstersData.map(function (item) {
-          return <Card key={item.id} item={item} />;
-        })
+        <div className="card-list">
+          {filteredMonstersData.map((item) => (
+            <Card key={item.id} item={item} />
+          ))}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
 export default Homepage;
-
 
 // class App extends Component {
 //   constructor() {
