@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchBox from '../../components/search-box/search-box.component';
 import Card from '../../components/card/card.component';
+import Loader from '../../components/loader/loader';
 
 function Homepage() {
   const [monsters, setMonsters] = useState([]);
@@ -27,7 +28,7 @@ function Homepage() {
       <h1>Monsters Rolodex</h1>
       <SearchBox value={searchText} handleSearchBoxChange={handleSearchBoxChange} />
       {filteredMonstersData.length < 1 ? (
-        <p>Loading....</p>
+        <Loader/>
       ) : (
         <div className="card-list">
           {filteredMonstersData.map((item) => (
