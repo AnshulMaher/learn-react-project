@@ -3,10 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 import Homepage from './pages/homepage/hompage';
 import CardDetailPage from './pages/card-detail/card-detail';
 import './App.css';
+import Header from './components/header/header';
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/detail/:id" element={<CardDetailPage />} />
