@@ -26,11 +26,3 @@ h1 {
   font-size: 72px;
   color: #0ccac4;
 }
-
-.card-list {
-  width: 85vw;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
-}

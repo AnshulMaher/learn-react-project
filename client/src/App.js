@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Homepage from './pages/homepage/hompage';
+import Homepage from './pages/homepage/homepage';
 import CardDetailPage from './pages/card-detail/card-detail';
 import './App.css';
 import Header from './components/header/header';

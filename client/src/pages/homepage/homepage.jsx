@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
-import axios from 'axios';
 import SearchBox from '../../components/search-box/search-box.component';
 import Card from '../../components/card/card.component';
 import Loader from '../../components/loader/loader';
+import { api_call, REQUEST_TYPE } from '../../api';
+import { USERS } from '../../api/routes';
+import "./homepage.styles.css";
 
 function Homepage() {
   const [monsters, setMonsters] = useState([]);
@@ -15,17 +16,17 @@ function Homepage() {
   };
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/users').then((response) => setMonsters(response.data));
+    api_call(USERS, REQUEST_TYPE.GET).then((response) => setMonsters(response.data))
   }, []);
 
   const filteredMonstersData = monsters.filter((item) => {
-    const name = item.name.toLowerCase();
+    const name = item.first_name.toLowerCase();
     if (name.includes(searchText.toLowerCase())) return item;
   });
 
   return (
     <>
-      <h1>Monsters Rolodex</h1>
+      <h1>User management</h1>
       <SearchBox value={searchText} handleSearchBoxChange={handleSearchBoxChange} />
       {filteredMonstersData.length < 1 ? (
         <Loader/>
@@ -59,18 +60,16 @@ export default Homepage;
 
 //     // const { monsters } = this.state;
 //     // const filteredData = monsters.filter(function (item) {
-//     //   const name = item.name.toLowerCase();
+//     //   const name = item.first_name.toLowerCase();
 //     //   if (name.includes(text.toLowerCase())) return item;
 //     // });
 
 //     // this.setState({ filteredMonstersData: filteredData });
 //   };
 
-//   // mounting, updting, unmount
 //   // mounting
 //   componentDidMount() {
-//     axios.get('https://jsonplaceholder.typicode.com/users')
-//       .then(response => this.setState({ monsters: response.data }));
+//     api_call(USERS, REQUEST_TYPE.GET).then((response) => this.setState({monsters: response.data});
 //   }
 
 //   render() {
@@ -92,3 +91,4 @@ export default Homepage;
 //     );
 //   }
 // }
+// export default Homepage;
