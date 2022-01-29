@@ -41,7 +41,6 @@ export function api_call(end_point, method, options = {}) {
   return new Promise((resolve, reject) => {
     axios({ method, url, headers, data })
       .then((response) => {
-        console.log('response', response);
         let { data: responseData } = response;
         if (response) {
         } else {
