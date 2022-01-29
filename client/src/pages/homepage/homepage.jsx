@@ -25,9 +25,8 @@ function Homepage() {
   });
 
   return (
-    <>
-      <h1>User management</h1>
-      <SearchBox value={searchText} handleSearchBoxChange={handleSearchBoxChange} />
+    <div id='homePageContainer'>
+      <SearchBox searchText={searchText} handleSearchBoxChange={handleSearchBoxChange} />
       {filteredMonstersData.length < 1 ? (
         <Loader/>
       ) : (
@@ -37,7 +36,7 @@ function Homepage() {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
 

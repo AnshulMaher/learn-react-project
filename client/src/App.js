@@ -4,19 +4,19 @@ import Homepage from './pages/homepage/homepage';
 import CardDetailPage from './pages/card-detail/card-detail';
 import './App.css';
 import Header from './components/header/header';
+import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
+import RequireAuth from './components/require-auth.component';
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/detail/:id" element={<CardDetailPage />} />
-
-        {/* <Route path="/detail">
-          <Route path=":id" element={<CardDetailPage />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/detail/:id" element={<CardDetailPage />} />
         </Route>
-      */}
+        <Route path="/sign-in" element={<SignInAndSignUpPage />} />
       </Routes>
     </div>
   );

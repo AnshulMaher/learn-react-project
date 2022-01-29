@@ -1,12 +1,14 @@
-#homePageContainer{
+#signInContainer{
+  width: 380px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.card-list{
-  width: 100%;
+#signInTitle{
+  margin: 10px 0;
+}
+
+.buttonsBarContainer{
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-};
+}

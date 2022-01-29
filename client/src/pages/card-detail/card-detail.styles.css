@@ -1,6 +1,18 @@
-
-
 .card-detail {
-    width: 30%;
-    margin: 0 auto;
-  }
+  display: flex;
+  width: 30%;
+  padding: 25px 0;
+}
+
+.card-image {
+  height: 128px;
+  width: 128px;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+.card-detail-email {
+  font-size: 18px;
+}

@@ -8,9 +8,11 @@ function Card({ item: { id, first_name, last_name, avatar, email } }) {
   const navigate = useNavigate();
   return (
     <div className="card-container" onClick={() => navigate(`/detail/${id}`)}>
-      <img src={avatar} alt="monster" />
-      <h2>{`${first_name} ${last_name}`}</h2>
-      <p>Email: {email}</p>
+      <img src={avatar} className="card-image" />
+      <div className='card-content'>
+        <h2>{`${first_name} ${last_name}`}</h2>
+        <p>Email: {email}</p>
+      </div>
     </div>
   );
 }

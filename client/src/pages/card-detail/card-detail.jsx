@@ -17,11 +17,16 @@ function CardDetailPage() {
     api_call(`${USERS}/${params.id}`, REQUEST_TYPE.GET).then((response) => setData(response.data));
   }, [params.id]);
 
-  return (
-    <>
-      <h1>Card Detail Page</h1>
-      <div className="card-detail">{!data ? <Loader /> : <Card item={data} />}</div>
-    </>
+  return !data ? (
+    <Loader />
+  ) : (
+    <div className="card-detail">
+      <img src={data.avatar} className="card-image" alt={data.first_name} />
+      <div className="card-content">
+        <h2>{`${data.first_name} ${data.last_name}`}</h2>
+        <span className='card-detail-email'>Email: {data.email}</span>
+      </div>
+    </div>
   );
 }
 
