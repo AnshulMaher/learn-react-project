@@ -12,10 +12,13 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
+        
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Homepage />} />
           <Route path="/detail/:id" element={<CardDetailPage />} />
         </Route>
+
+
         <Route path="/sign-in" element={<SignInAndSignUpPage />} />
       </Routes>
     </div>

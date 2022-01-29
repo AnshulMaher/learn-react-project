@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 function RequireAuth() {
-  if (false) return <Navigate to="/sign-in" />;
+  const userLoggedIn = false;
+  if (!userLoggedIn) return <Navigate to="/sign-in" />;
   return <Outlet />;
 }
 
