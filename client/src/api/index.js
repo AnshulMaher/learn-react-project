@@ -9,7 +9,7 @@ axios.interceptors.response.use(
     if (error && error.response && error.response.status === 401) {
       alert('Token Expired');
       localStorage.removeItem('access_token');
-      window.location.href = '/';
+      window.location.href = '/sign-in';
     } else {
       return Promise.reject(error);
     }

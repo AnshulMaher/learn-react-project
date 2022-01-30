@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { api_call, REQUEST_TYPE } from '../../api';
 import { USERS } from '../../api/routes';
-import Card from '../../components/card/card.component';
 import Loader from '../../components/loader/loader';
 import './card-detail.styles.css';
 

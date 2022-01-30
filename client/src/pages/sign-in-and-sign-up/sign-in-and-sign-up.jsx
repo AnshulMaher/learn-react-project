@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import SignIn from '../../components/sign-in/sign-in.component';
