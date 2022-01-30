@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchBox from '../../components/search-box/search-box.component';
 import Card from '../../components/card/card.component';
 import Loader from '../../components/loader/loader';
 import { api_call, REQUEST_TYPE } from '../../api';
 import { USERS } from '../../api/routes';
-import "./homepage.styles.css";
+import './homepage.styles.css';
+import { set_users_list_action } from '../../redux/user/user.actions';
 
 function Homepage() {
-  const [monsters, setMonsters] = useState([]);
+  const dispatch = useDispatch();
+  const monsters = useSelector((state) => state.user.user_list);
   const [searchText, setSearchText] = useState('');
 
   const handleSearchBoxChange = (e) => {
@@ -16,7 +19,9 @@ function Homepage() {
   };
 
   useEffect(() => {
-    api_call(USERS, REQUEST_TYPE.GET).then((response) => setMonsters(response.data))
+    api_call(USERS, REQUEST_TYPE.GET).then((response) => {
+      dispatch(set_users_list_action(response.data));
+    });
   }, []);
 
   const filteredMonstersData = monsters.filter((item) => {
@@ -25,10 +30,10 @@ function Homepage() {
   });
 
   return (
-    <div id='homePageContainer'>
+    <div id="homePageContainer">
       <SearchBox searchText={searchText} handleSearchBoxChange={handleSearchBoxChange} />
       {filteredMonstersData.length < 1 ? (
-        <Loader/>
+        <Loader />
       ) : (
         <div className="card-list">
           {filteredMonstersData.map((item) => (

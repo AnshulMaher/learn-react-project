@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { api_call, REQUEST_TYPE } from '../../api';
-import { USERS } from '../../api/routes';
 import Loader from '../../components/loader/loader';
 import './card-detail.styles.css';
 
@@ -10,11 +8,7 @@ import './card-detail.styles.css';
 
 function CardDetailPage() {
   const params = useParams();
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    api_call(`${USERS}/${params.id}`, REQUEST_TYPE.GET).then((response) => setData(response.data));
-  }, [params.id]);
+  const data = useSelector((state) => state.user.user_list.find((userDetail) => userDetail.id === parseInt(params.id)));
 
   return !data ? (
     <Loader />
@@ -23,7 +17,7 @@ function CardDetailPage() {
       <img src={data.avatar} className="card-image" alt={data.first_name} />
       <div className="card-content">
         <h2>{`${data.first_name} ${data.last_name}`}</h2>
-        <span className='card-detail-email'>Email: {data.email}</span>
+        <span className="card-detail-email">Email: {data.email}</span>
       </div>
     </div>
   );
