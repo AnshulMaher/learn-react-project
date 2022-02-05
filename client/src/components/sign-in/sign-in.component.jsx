@@ -1,10 +1,8 @@
 import { Component, useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { api_call, REQUEST_TYPE } from '../../api';
-import { LOGIN } from '../../api/routes';
 import { connect, useDispatch } from 'react-redux';
-import { sign_in_failure, sign_in_success } from '../../redux/auth/auth.actions';
+import {  sign_in_start } from '../../redux/auth/auth.actions';
 import './sign-in.styles.css';
 
 function SignIn() {
@@ -17,18 +15,9 @@ function SignIn() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    api_call(LOGIN, REQUEST_TYPE.POST, {
-      data: credentials
-    })
-      .then((response) => {
-        setCredentials({ email: '', password: '' });
-        dispatch(sign_in_success(response.token));
-      })
-      .catch((error) => {
-        dispatch(sign_in_failure(error.message));
-      });
+    dispatch(sign_in_start(credentials));
   };
+  
   return (
     <div id="signInContainer">
       <h2 id="signInTitle">I already have an account</h2>
@@ -59,15 +48,9 @@ export default SignIn;
 //     e.preventDefault();
 
 //     const { email, password } = this.state;
-//     api_call(LOGIN, REQUEST_TYPE.POST, { data: { email, password } })
-//       .then((response) => {
-//         this.setState({ email: '', password: '' });
-//         this.props.signInSuccess(response.token);
-//       })
-//       .catch((error) => {
-//         this.props.signInFailure(error.message);
-//       });
+//     this.props.signInStart({ email, password } );
 //   };
+
 //   render() {
 //     const { email, password } = this.state;
 //     return (
@@ -88,8 +71,7 @@ export default SignIn;
 // }
 
 // const mapDispatchToProps = (dispatch) => ({
-//   signInSuccess: (userData) => dispatch(sign_in_success(userData)),
-//   signInFailure: (msg) => dispatch(sign_in_failure(msg))
+//   signInStart: (credentials) => dispatch(sign_in_start(credentials))
 // });
 
 // export default connect(null, mapDispatchToProps)(SignIn);

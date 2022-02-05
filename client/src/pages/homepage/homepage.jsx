@@ -3,10 +3,8 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import SearchBox from '../../components/search-box/search-box.component';
 import Card from '../../components/card/card.component';
 import Loader from '../../components/loader/loader';
-import { api_call, REQUEST_TYPE } from '../../api';
-import { USERS } from '../../api/routes';
-import './homepage.styles.css';
 import { set_users_list_action } from '../../redux/user/user.actions';
+import './homepage.styles.css';
 
 function Homepage() {
   const dispatch = useDispatch();
@@ -18,11 +16,7 @@ function Homepage() {
     setSearchText(text);
   };
 
-  useEffect(() => {
-    api_call(USERS, REQUEST_TYPE.GET).then((response) => {
-      dispatch(set_users_list_action(response.data));
-    });
-  }, []);
+  useEffect(() => dispatch(set_users_list_action()), []);
 
   const filteredMonstersData = monsters.filter((item) => {
     const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
@@ -61,7 +55,7 @@ export default Homepage;
 
 //   // mounting
 //   componentDidMount() {
-//     api_call(USERS, REQUEST_TYPE.GET).then((response) => this.props.setUserList(response.data));
+//      this.props.setUserList(response.data);
 //   }
 
 //   render() {
@@ -95,7 +89,7 @@ export default Homepage;
 // });
 
 // const mapDispatchToProps = (dispatch) => ({
-//   setUserList: (userList) => dispatch(set_users_list_action(userList))
+//   setUserList: () => dispatch(set_users_list_action())
 // });
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

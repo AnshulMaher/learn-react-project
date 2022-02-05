@@ -2,10 +2,8 @@ import React, { Component, useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { api_call, REQUEST_TYPE } from '../../api';
-import { REGISTER } from '../../api/routes';
 import { connect, useDispatch } from 'react-redux';
-import { sign_up_failure, sign_up_success } from '../../redux/auth/auth.actions';
+import { sign_up_start } from '../../redux/auth/auth.actions';
 
 import './sign-up.styles.css';
 
@@ -45,23 +43,7 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const reqBody = { email, password };
-
-    api_call(REGISTER, REQUEST_TYPE.POST, {
-      data: reqBody
-    })
-      .then((response) => {
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-
-        dispatch(sign_up_success(response.token));
-      })
-      .catch((error) => {
-        dispatch(sign_up_failure(error.message));
-      });
+    dispatch(sign_up_start({ email, password }));
   };
 
   return (
@@ -93,17 +75,7 @@ export default SignUp;
 //     e.preventDefault();
 
 //     const { email, password } = this.state;
-
-//     api_call(REGISTER, REQUEST_TYPE.POST, {
-//       data: { email, password }
-//     })
-//       .then((response) => {
-//         this.setState({ first_name: '', last_name: '', email: '', password: '' });
-//         this.props.signUpSuccess(response.token);
-//       })
-//       .catch((error) => {
-//         this.props.signUpFailure(error.message);
-//       });
+//     this.props.signUpStart({ email, password });
 //   };
 
 //   render() {
@@ -125,8 +97,7 @@ export default SignUp;
 // }
 
 // const mapDispatchToProps = (dispatch) => ({
-//   signUpSuccess: (userData) => dispatch(sign_up_success(userData)),
-//   signUpFailure: (msg) => dispatch(sign_up_failure(msg))
+//   signUpStart: (userData) => dispatch(sign_up_start(userData))
 // });
 
 // export default connect(null, mapDispatchToProps)(SignUp);
