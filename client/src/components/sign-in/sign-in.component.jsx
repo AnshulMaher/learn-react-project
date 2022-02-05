@@ -1,18 +1,13 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { LOGIN } from '../../api/routes';
-import { api_call, REQUEST_TYPE } from '../../api';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { sign_in_start } from '../../redux/auth/auth.actions';
 import './sign-in.styles.css';
-import { sign_in_success } from '../../redux/auth/auth.actions';
 
 function SignIn() {
   const dispatch = useDispatch();
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
-  });
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,22 +15,9 @@ function SignIn() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    api_call(LOGIN, REQUEST_TYPE.POST, {
-      data: credentials
-    })
-      .then((response) => {
-        setCredentials({
-          email: '',
-          password: ''
-        });
-
-        dispatch(sign_in_success(response.token));
-      })
-      .catch((error) => {
-        alert('Error: ' + error.message);
-      });
+    dispatch(sign_in_start(credentials));
   };
+  
   return (
     <div id="signInContainer">
       <h2 id="signInTitle">I already have an account</h2>

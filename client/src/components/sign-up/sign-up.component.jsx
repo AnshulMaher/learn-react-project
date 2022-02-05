@@ -5,7 +5,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import { api_call, REQUEST_TYPE } from '../../api';
 import { REGISTER } from '../../api/routes';
 import { useDispatch } from 'react-redux';
-import { sign_up_success } from '../../redux/auth/auth.actions';
+import { sign_up_start, sign_up_success } from '../../redux/auth/auth.actions';
 
 import './sign-up.styles.css';
 
@@ -44,23 +44,7 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const reqBody = { email, password };
-
-    api_call(REGISTER, REQUEST_TYPE.POST, {
-      data: reqBody
-    })
-      .then((response) => {
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-
-        dispatch(sign_up_success(response.token));
-      })
-      .catch((error) => {
-        alert('Error: ' + error.message);
-      });
+    dispatch(sign_up_start({ email, password }));
   };
 
   return (
