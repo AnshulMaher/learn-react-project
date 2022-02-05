@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchBox from '../../components/search-box/search-box.component';
 import Card from '../../components/card/card.component';
@@ -25,7 +25,7 @@ function Homepage() {
   }, []);
 
   const filteredMonstersData = monsters.filter((item) => {
-    const name = item.first_name.toLowerCase();
+    const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
     if (name.includes(searchText.toLowerCase())) return item;
   });
 
@@ -47,52 +47,46 @@ function Homepage() {
 
 export default Homepage;
 
-// class App extends Component {
+// class Homepage extends Component {
 //   constructor() {
 //     super();
 
-//     this.state = {
-//       monsters: [],
-//       // filteredMonstersData: [],
-//       searchText: ''
-//     };
+//     this.state = { monsters: [], searchText: '' };
 //   }
 
 //   handleSearchBoxChange = (e) => {
 //     const text = e.target.value;
 //     this.setState({ searchText: text });
-
-//     // const { monsters } = this.state;
-//     // const filteredData = monsters.filter(function (item) {
-//     //   const name = item.first_name.toLowerCase();
-//     //   if (name.includes(text.toLowerCase())) return item;
-//     // });
-
-//     // this.setState({ filteredMonstersData: filteredData });
 //   };
 
 //   // mounting
 //   componentDidMount() {
-//     api_call(USERS, REQUEST_TYPE.GET).then((response) => this.setState({monsters: response.data});
+//     api_call(USERS, REQUEST_TYPE.GET).then((response) => this.setState({ monsters: response.data }));
 //   }
 
 //   render() {
-//     // const { searchText, filteredMonstersData } = this.state;
 //     const { searchText, monsters } = this.state;
 
-//     const filteredMonstersData = monsters.filter(function (item) {
-//       const name = item.name.toLowerCase();
-//       if (name.includes(searchText.toLowerCase())) return item;
+//     const filteredMonstersData = monsters.filter((item) => {
+//       const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
+//       return name.includes(searchText.toLowerCase());
 //     });
 
 //     return (
-//       <div className="App">
+//       <div id="homePageContainer">
 //         <SearchBox value={searchText} handleSearchBoxChange={this.handleSearchBoxChange} />
-//         {filteredMonstersData.map(function (item) {
-//           return <Card key={item.id} item={item} />;
-//         })}
+//         {filteredMonstersData.length < 1 ? (
+//           <Loader />
+//         ) : (
+//           <div className="card-list">
+//             {filteredMonstersData.map((item) => (
+//               <Card key={item.id} item={item} />
+//             ))}
+//           </div>
+//         )}
 //       </div>
 //     );
 //   }
 // }
+
 // export default Homepage;
