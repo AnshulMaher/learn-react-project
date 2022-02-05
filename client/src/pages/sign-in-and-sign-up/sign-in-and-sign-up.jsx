@@ -9,7 +9,6 @@ import './sign-in-and-sign-up.styles.css';
 const SignInAndSignUpPage = () => {
   const userLoggedIn = !!useSelector((state) => state.auth.access_token);
   if (userLoggedIn) return <Navigate to="/" />;
-
   return (
     <div id="signInAndSignUpContainer">
       <SignIn />

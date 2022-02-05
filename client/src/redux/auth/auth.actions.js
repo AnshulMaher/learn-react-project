@@ -1,5 +1,6 @@
 import { api_call, REQUEST_TYPE } from '../../api';
 import { LOGIN, REGISTER } from '../../api/routes';
+import { show_notification } from '../notification/notification.actions';
 import {
   SIGN_IN_FAILURE,
   SIGN_IN_START,
@@ -16,16 +17,18 @@ export const sign_up_success = (payload) => ({ type: SIGN_UP_SUCCESS, payload })
 
 export const sign_up_failure = (error) => ({ type: SIGN_UP_FAILURE, payload: error });
 
-export const sign_up_start = (userData) => (dispatch) => {
+export const sign_up_start = (credentials) => (dispatch) => {
   dispatch({ type: SIGN_UP_START });
+
   api_call(REGISTER, REQUEST_TYPE.POST, {
-    data: userData
+    data: credentials
   })
     .then((response) => {
       dispatch(sign_up_success(response.token));
+      dispatch(show_notification('Sign Up Successful'));
     })
     .catch((error) => {
-      alert('Error: ' + error.message);
+      dispatch(sign_up_failure(error.message));
     });
 };
 
@@ -33,18 +36,18 @@ export const sign_in_success = (payload) => ({ type: SIGN_IN_SUCCESS, payload })
 
 export const sign_in_failure = (error) => ({ type: SIGN_IN_FAILURE, payload: error });
 
-export const sign_in_start = (credentials) => {
-  return (dispatch) => {
-    dispatch({ type: SIGN_IN_START });
-
-    api_call(LOGIN, REQUEST_TYPE.POST, { data: credentials })
-      .then((response) => {
-        dispatch(sign_in_success(response.token));
-      })
-      .catch((error) => {
-        dispatch(sign_in_failure(error.message));
-      });
-  };
+export const sign_in_start = (credentials) => (dispatch) => {
+  dispatch({ type: SIGN_IN_START });
+  api_call(LOGIN, REQUEST_TYPE.POST, {
+    data: credentials
+  })
+    .then((response) => {
+      dispatch(sign_in_success(response.token));
+      dispatch(show_notification('Log In Successful'));
+    })
+    .catch((error) => {
+      dispatch(sign_in_failure(error.message));
+    });
 };
 
 export const sign_out_success = () => ({ type: SIGN_OUT_SUCCESS });
@@ -55,7 +58,8 @@ export const sign_out_start = () => (dispatch) => {
   try {
     dispatch({ type: SIGN_OUT_START });
     dispatch(sign_out_success());
+    dispatch(show_notification('Log Out Successful'));
   } catch (error) {
-    dispatch(sign_out_failure(error.message));
+    dispatch(sign_out_failure());
   }
 };

@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { Component, useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { sign_in_start } from '../../redux/auth/auth.actions';
+import { connect, useDispatch } from 'react-redux';
+import {  sign_in_start } from '../../redux/auth/auth.actions';
 import './sign-in.styles.css';
 
 function SignIn() {
@@ -35,3 +35,43 @@ function SignIn() {
 }
 
 export default SignIn;
+
+// class SignIn extends Component {
+//   state = { email: '', password: '' };
+
+//   handleChange = (e) => {
+//     const { name, value } = e.target;
+//     this.setState({ [name]: value });
+//   };
+
+//   handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     const { email, password } = this.state;
+//     this.props.signInStart({ email, password } );
+//   };
+
+//   render() {
+//     const { email, password } = this.state;
+//     return (
+//       <div id="signInContainer">
+//         <h2 id="signInTitle">I already have an account</h2>
+//         <span>Sign in with your email and password</span>
+
+//         <form onSubmit={this.handleSubmit}>
+//           <FormInput name="email" type="email" value={email} label="email" handleChange={this.handleChange} required />
+//           <FormInput name="password" type="password" value={password} label="password" handleChange={this.handleChange} required />
+//           <div className="buttonsBarContainer">
+//             <CustomButton type="submit"> Sign in </CustomButton>
+//           </div>
+//         </form>
+//       </div>
+//     );
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => ({
+//   signInStart: (credentials) => dispatch(sign_in_start(credentials))
+// });
+
+// export default connect(null, mapDispatchToProps)(SignIn);

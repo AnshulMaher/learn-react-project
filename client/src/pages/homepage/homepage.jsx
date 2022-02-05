@@ -1,12 +1,10 @@
 import React, { useState, useEffect, Component } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import SearchBox from '../../components/search-box/search-box.component';
 import Card from '../../components/card/card.component';
 import Loader from '../../components/loader/loader';
-import { api_call, REQUEST_TYPE } from '../../api';
-import { USERS } from '../../api/routes';
+import { get_users_list } from '../../redux/user/user.actions';
 import './homepage.styles.css';
-import { set_users_list_action } from '../../redux/user/user.actions';
 
 function Homepage() {
   const dispatch = useDispatch();
@@ -18,11 +16,7 @@ function Homepage() {
     setSearchText(text);
   };
 
-  useEffect(() => {
-    api_call(USERS, REQUEST_TYPE.GET).then((response) => {
-      dispatch(set_users_list_action(response.data));
-    });
-  }, []);
+  useEffect(() => dispatch(get_users_list()), []);
 
   const filteredMonstersData = monsters.filter((item) => {
     const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
@@ -51,7 +45,7 @@ export default Homepage;
 //   constructor() {
 //     super();
 
-//     this.state = { monsters: [], searchText: '' };
+//     this.state = { searchText: '' };
 //   }
 
 //   handleSearchBoxChange = (e) => {
@@ -61,13 +55,14 @@ export default Homepage;
 
 //   // mounting
 //   componentDidMount() {
-//     api_call(USERS, REQUEST_TYPE.GET).then((response) => this.setState({ monsters: response.data }));
+//      this.props.getUserList();
 //   }
 
 //   render() {
-//     const { searchText, monsters } = this.state;
+//     const { userList } = this.props;
+//     const { searchText } = this.state;
 
-//     const filteredMonstersData = monsters.filter((item) => {
+//     const filteredUserList = userList.filter((item) => {
 //       const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
 //       return name.includes(searchText.toLowerCase());
 //     });
@@ -75,11 +70,11 @@ export default Homepage;
 //     return (
 //       <div id="homePageContainer">
 //         <SearchBox value={searchText} handleSearchBoxChange={this.handleSearchBoxChange} />
-//         {filteredMonstersData.length < 1 ? (
+//         {filteredUserList.length < 1 ? (
 //           <Loader />
 //         ) : (
 //           <div className="card-list">
-//             {filteredMonstersData.map((item) => (
+//             {filteredUserList.map((item) => (
 //               <Card key={item.id} item={item} />
 //             ))}
 //           </div>
@@ -89,4 +84,12 @@ export default Homepage;
 //   }
 // }
 
-// export default Homepage;
+// const mapStateToProps = (state) => ({
+//   userList: state.user.user_list
+// });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   getUserList: () => dispatch(get_users_list())
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

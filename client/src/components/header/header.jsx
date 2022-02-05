@@ -5,10 +5,10 @@ import { sign_out_start } from '../../redux/auth/auth.actions';
 import './header.styles.css';
 
 function Header() {
+  const isLoggedIn = !!useSelector((state) => state.auth.access_token);
   const dispatch = useDispatch();
-  const userLoggedIn = !!useSelector((state) => state.auth.access_token);
 
-  const handleSignOut = () => dispatch(sign_out_start());
+  const handlSignOut = () => dispatch(sign_out_start());
 
   return (
     <div id="headerContainer">
@@ -16,8 +16,8 @@ function Header() {
         HOME
       </Link>
       <div id="optionsContainer">
-        {userLoggedIn ? (
-          <a className="optionLink" href="#" onClick={handleSignOut}>
+        {isLoggedIn ? (
+          <a href="#" className="optionLink" onClick={handlSignOut}>
             LOG OUT
           </a>
         ) : (

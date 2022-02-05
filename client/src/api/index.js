@@ -10,7 +10,7 @@ axios.interceptors.response.use(
   (error) => {
     if (error && error.response && error.response.status === 401) {
       alert('Token Expired');
-      store?.dispatch(sign_out_success())
+      store?.dispatch(sign_out_success());
     } else {
       return Promise.reject(error);
     }
