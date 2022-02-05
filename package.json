@@ -2,8 +2,8 @@
   "name": "learn-react-project",
   "version": "1.0.0",
   "engines": {
-    "node": "16.12.0",
-    "npm": "8.1.0"
+    "node": "14.18.0",
+    "npm": "6.14.15"
   },
   "description": "",
   "main": "server.js",
@@ -11,7 +11,7 @@
     "client": "cd client && npm start",
     "build": "cd client && npm run build",
     "start": "node server.js",
-    "prestart": "cd client && npm install --only=prod --no-shrinkwrap && npm run build"
+    "prestart": "cd client && npm install --only=prod && npm run build"
   },
   "repository": {
     "type": "git",
