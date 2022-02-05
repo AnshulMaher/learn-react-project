@@ -1,10 +1,21 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { sign_out_failure, sign_out_success } from '../../redux/auth/auth.actions';
 import './header.styles.css';
 
 function Header() {
-  const isLoggedIn = !!localStorage.getItem('access_token');
-  const navigation = useNavigate();
+  const isLoggedIn = !!useSelector((state) => state.auth.access_token);
+  const dispatch = useDispatch();
+
+  const handlSignOut = () => {
+    try {
+      dispatch(sign_out_success());
+    } catch (error) {
+      dispatch(sign_out_failure());
+    }
+  };
+
   return (
     <div id="headerContainer">
       <Link id="logoContainer" to="/">
@@ -12,13 +23,7 @@ function Header() {
       </Link>
       <div id="optionsContainer">
         {isLoggedIn ? (
-          <a
-            className="optionLink"
-            onClick={() => {
-              localStorage.setItem('access_token', '');
-              navigation('/sign-in');
-            }}
-          >
+          <a href="#" className="optionLink" onClick={handlSignOut}>
             LOG OUT
           </a>
         ) : (
