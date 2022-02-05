@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { FAKE_API_URL } from '../config';
+import { sign_out_success } from '../redux/auth/auth.actions';
+import store from '../redux/store';
 
 axios.interceptors.response.use(
   (response) => {
@@ -8,8 +10,7 @@ axios.interceptors.response.use(
   (error) => {
     if (error && error.response && error.response.status === 401) {
       alert('Token Expired');
-      localStorage.removeItem('access_token');
-      window.location.href = '/sign-in';
+      store?.dispatch(sign_out_success())
     } else {
       return Promise.reject(error);
     }
@@ -35,7 +36,7 @@ export function api_call(end_point, method, options = {}) {
   const url = `${serviceURL || FAKE_API_URL}${end_point}`;
   const headers = {
     'Content-Type': isForm ? 'multipart/form-data' : 'application/json',
-    Authorization: localStorage.getItem('access_token')
+    Authorization: store?.getState()?.auth.access_token
   };
 
   return new Promise((resolve, reject) => {

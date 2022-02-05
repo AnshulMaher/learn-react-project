@@ -1,13 +1,14 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { LOGIN } from '../../api/routes';
+import { api_call, REQUEST_TYPE } from '../../api';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import './sign-in.styles.css';
-import { useState } from 'react';
-import { api_call, REQUEST_TYPE } from '../../api';
-import { LOGIN } from '../../api/routes';
-import { useNavigate } from 'react-router-dom';
+import { sign_in_success } from '../../redux/auth/auth.actions';
 
 function SignIn() {
-  const navigation = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -24,14 +25,12 @@ function SignIn() {
       data: credentials
     })
       .then((response) => {
-        localStorage.setItem('access_token', response.token);
-
         setCredentials({
           email: '',
           password: ''
         });
 
-        navigation('/');
+        dispatch(sign_in_success(response.token));
       })
       .catch((error) => {
         alert('Error: ' + error.message);

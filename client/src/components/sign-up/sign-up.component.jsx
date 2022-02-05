@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import './sign-up.styles.css';
 import { api_call, REQUEST_TYPE } from '../../api';
 import { REGISTER } from '../../api/routes';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { sign_up_success } from '../../redux/auth/auth.actions';
+
+import './sign-up.styles.css';
 
 function SignUp() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,15 +51,12 @@ function SignUp() {
       data: reqBody
     })
       .then((response) => {
-        localStorage.setItem('access_token', response.token);
-
         setFirstName('');
         setLastName('');
         setEmail('');
         setPassword('');
 
-        navigate("/");
-
+        dispatch(sign_up_success(response.token));
       })
       .catch((error) => {
         alert('Error: ' + error.message);
