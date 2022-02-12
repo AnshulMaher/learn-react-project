@@ -39,41 +39,42 @@ function SignIn() {
 export default SignIn;
 
 // class SignIn extends Component {
-//   state = { email: '', password: '' };
+//     static contextType = NotificationContext;
+//     state = { email: '', password: '' };
 
-//   handleChange = (e) => {
-//     const { name, value } = e.target;
-//     this.setState({ [name]: value });
-//   };
+//     handleChange = (e) => {
+//         const { name, value } = e.target;
+//         this.setState({ [name]: value });
+//     };
 
-//   handleSubmit = (e) => {
-//     e.preventDefault();
+//     handleSubmit = (e) => {
+//         e.preventDefault();
 
-//     const { email, password } = this.state;
-//     this.props.signInStart({ email, password } );
-//   };
+//         const { email, password } = this.state;
+//         this.props.signInStart({ email, password }, () => this.context.setMessage('Sign In Successful'));
+//     };
 
-//   render() {
-//     const { email, password } = this.state;
-//     return (
-//       <div id="signInContainer">
-//         <h2 id="signInTitle">I already have an account</h2>
-//         <span>Sign in with your email and password</span>
+//     render() {
+//         const { email, password } = this.state;
+//         return (
+//             <div id="signInContainer">
+//                 <h2 id="signInTitle">I already have an account</h2>
+//                 <span>Sign in with your email and password</span>
 
-//         <form onSubmit={this.handleSubmit}>
-//           <FormInput name="email" type="email" value={email} label="email" handleChange={this.handleChange} required />
-//           <FormInput name="password" type="password" value={password} label="password" handleChange={this.handleChange} required />
-//           <div className="buttonsBarContainer">
-//             <CustomButton type="submit"> Sign in </CustomButton>
-//           </div>
-//         </form>
-//       </div>
-//     );
-//   }
+//                 <form onSubmit={this.handleSubmit}>
+//                     <FormInput name="email" type="email" value={email} label="email" handleChange={this.handleChange} required />
+//                     <FormInput name="password" type="password" value={password} label="password" handleChange={this.handleChange} required />
+//                     <div className="buttonsBarContainer">
+//                         <CustomButton type="submit"> Sign in </CustomButton>
+//                     </div>
+//                 </form>
+//             </div>
+//         );
+//     }
 // }
 
 // const mapDispatchToProps = (dispatch) => ({
-//   signInStart: (credentials) => dispatch(sign_in_start(credentials))
+//     signInStart: (credentials, cb) => dispatch(sign_in_start(credentials, cb))
 // });
 
 // export default connect(null, mapDispatchToProps)(SignIn);

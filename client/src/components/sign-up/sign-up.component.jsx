@@ -67,6 +67,7 @@ function SignUp() {
 export default SignUp;
 
 // class SignUp extends Component {
+//         static contextType = NotificationContext;
 //   state = { first_name: '', last_name: '', email: '', password: '' };
 
 //   handleChange = (e) => {
@@ -78,7 +79,7 @@ export default SignUp;
 //     e.preventDefault();
 
 //     const { email, password } = this.state;
-//     this.props.signUpStart({ email, password });
+//     this.props.signUpStart({ email, password }, () => this.context.setMessage('Sign Up Successful'));
 //   };
 
 //   render() {
@@ -100,7 +101,7 @@ export default SignUp;
 // }
 
 // const mapDispatchToProps = (dispatch) => ({
-//   signUpStart: (userData) => dispatch(sign_up_start(userData))
+//   signUpStart: (userData, cb) => dispatch(sign_up_start(userData, cb))
 // });
 
 // export default connect(null, mapDispatchToProps)(SignUp);

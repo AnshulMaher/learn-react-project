@@ -7,36 +7,36 @@ import { get_users_list } from '../../redux/user/user.actions';
 import './homepage.styles.css';
 
 function Homepage() {
-  const dispatch = useDispatch();
-  const monsters = useSelector((state) => state.user.user_list);
-  const [searchText, setSearchText] = useState('');
+    const dispatch = useDispatch();
+    const monsters = useSelector((state) => state.user.user_list);
+    const [searchText, setSearchText] = useState('');
 
-  const handleSearchBoxChange = (e) => {
-    const text = e.target.value;
-    setSearchText(text);
-  };
+    const handleSearchBoxChange = (e) => {
+        const text = e.target.value;
+        setSearchText(text);
+    };
 
-  useEffect(() => dispatch(get_users_list()), []);
+    useEffect(() => dispatch(get_users_list()), []);
 
-  const filteredMonstersData = monsters.filter((item) => {
-    const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
-    if (name.includes(searchText.toLowerCase())) return item;
-  });
+    const filteredMonstersData = monsters.filter((item) => {
+        const name = `${item.first_name.toLowerCase()} ${item.last_name.toLowerCase()}`;
+        if (name.includes(searchText.toLowerCase())) return item;
+    });
 
-  return (
-    <div id="homePageContainer">
-      <SearchBox searchText={searchText} handleSearchBoxChange={handleSearchBoxChange} />
-      {filteredMonstersData.length < 1 ? (
-        <Loader />
-      ) : (
-        <div className="card-list">
-          {filteredMonstersData.map((item) => (
-            <Card key={item.id} item={item} />
-          ))}
+    return (
+        <div id="homePageContainer">
+            <SearchBox searchText={searchText} handleSearchBoxChange={handleSearchBoxChange} />
+            {filteredMonstersData.length < 1 ? (
+                <Loader />
+            ) : (
+                <div className="card-list">
+                    {filteredMonstersData.map((item) => (
+                        <Card key={item.id} item={item} />
+                    ))}
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default Homepage;
