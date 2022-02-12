@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import NotificationContext from '../../context/store';
 import { sign_out_start } from '../../redux/auth/auth.actions';
 import './header.styles.css';
 
 function Header() {
   const isLoggedIn = !!useSelector((state) => state.auth.access_token);
   const dispatch = useDispatch();
+  const { setMessage } = useContext(NotificationContext);
 
-  const handlSignOut = () => dispatch(sign_out_start());
+  const handlSignOut = () => dispatch(sign_out_start(() => setMessage('Log Out Successful')));
 
   return (
     <div id="headerContainer">

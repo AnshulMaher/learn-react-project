@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -6,58 +6,62 @@ import { connect, useDispatch } from 'react-redux';
 import { sign_up_start } from '../../redux/auth/auth.actions';
 
 import './sign-up.styles.css';
+import NotificationContext from '../../context/store';
 
 function SignUp() {
-  const dispatch = useDispatch();
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const { setMessage } = useContext(NotificationContext);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+    const [first_name, setFirstName] = useState('');
+    const [last_name, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    switch (name) {
-      case 'first_name':
-        setFirstName(value);
-        break;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-      case 'last_name':
-        setLastName(value);
-        break;
-      case 'list_name':
-        setLastName(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
+        switch (name) {
+            case 'first_name':
+                setFirstName(value);
+                break;
 
-      default:
-        break;
-    }
-  };
+            case 'last_name':
+                setLastName(value);
+                break;
+            case 'list_name':
+                setLastName(value);
+                break;
+            case 'email':
+                setEmail(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(sign_up_start({ email, password }));
-  };
+            default:
+                break;
+        }
+    };
 
-  return (
-    <div id="signUpContainer">
-      <h2 id="signUpTitle">I do not have a account</h2>
-      <span>Sign up with your email and password</span>
-      <form className="sign-up-form" onSubmit={handleSubmit}>
-        <FormInput type="text" name="first_name" value={first_name} handleChange={handleChange} label="First Name" required />
-        <FormInput type="text" name="last_name" value={last_name} handleChange={handleChange} label="Last Name" required />
-        <FormInput type="email" name="email" label="Email" value={email} handleChange={handleChange} required />
-        <FormInput type="password" name="password" label="Password" value={password} handleChange={handleChange} required />
-        <CustomButton type="submit">SIGN UP</CustomButton>
-      </form>
-    </div>
-  );
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(sign_up_start({ email, password }, () => setMessage('Sign Up Successful')));
+        
+    };
+
+    return (
+        <div id="signUpContainer">
+            <h2 id="signUpTitle">I do not have a account</h2>
+            <span>Sign up with your email and password</span>
+            <form className="sign-up-form" onSubmit={handleSubmit}>
+                <FormInput type="text" name="first_name" value={first_name} handleChange={handleChange} label="First Name" required />
+                <FormInput type="text" name="last_name" value={last_name} handleChange={handleChange} label="Last Name" required />
+                <FormInput type="email" name="email" label="Email" value={email} handleChange={handleChange} required />
+                <FormInput type="password" name="password" label="Password" value={password} handleChange={handleChange} required />
+                <CustomButton type="submit">SIGN UP</CustomButton>
+            </form>
+        </div>
+    );
 }
 
 export default SignUp;
