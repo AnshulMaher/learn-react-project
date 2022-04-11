@@ -1,10 +1,11 @@
 import React, { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/header/header';
 import RequireAuth from './components/require-auth.component';
 import Notification from './components/notification/notification';
 import Loader from './components/loader/loader';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
+import * as eventActions from "./analytics";
 
 import './App.css';
 
@@ -13,6 +14,13 @@ const CardDetailPage = lazy(() => import('./pages/card-detail/card-detail'));
 const SignInAndSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up'));
 
 function App() {
+  const location = useLocation();
+
+  React.useEffect(()=> {
+    eventActions.logPageView();
+  }, [location])
+
+
   return (
     <div className="App">
         <Notification />
